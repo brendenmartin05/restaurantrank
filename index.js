@@ -27,7 +27,7 @@ app.use(flash());
 
 // USERS LOGGING IN
 app.use(function(req,res,next){
-	req.session.user = 1
+	req.session.user = 3
 	if(req.session.user){
 		db.user.findById(req.session.user).then(function(user){
 			req.currentUser = user;
@@ -124,8 +124,19 @@ app.get('/results', function(req,res){
 	yelp.search({term: "food", location: req.query.searchTerm}, function(error, data) {
 	  console.log(error);
 	  console.log(data);
-	  //res.send(data)
+	  // res.send(data)
 	  res.render('main/results', {data: data.businesses});
+	});
+});
+
+app.get('/results/:id', function(req,res){
+	yelp.business(req.params.id, function(error, data) {
+	  console.log(error);
+	  console.log(data);
+	  // res.send(data)
+	  res.render('main/restuarant', {data: data});
+
+	// res.send("restuarant info works");
 	});
 });
 
