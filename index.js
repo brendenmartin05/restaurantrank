@@ -124,8 +124,10 @@ app.get('/results', function(req,res){
 	yelp.search({term: "food", location: req.query.searchTerm}, function(error, data) {
 	  console.log(error);
 	  console.log(data);
+
 	  // res.send(data)
 	  res.render('main/results', {data: data.businesses});
+
 	});
 });
 
