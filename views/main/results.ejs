@@ -1,3 +1,10 @@
 <h1>Results</h1>
 
-<%= data %>
+<% data.forEach(function(data){ %>
+
+<div class="well">
+
+<a href="#"> <b><%= data.name %></b> </a>
+</div>
+
+<% }); %>
