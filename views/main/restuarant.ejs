@@ -1,8 +1,9 @@
 <div class="jumbotron" 	>
 <img src="<%= data.image_url %>" class="pull-left logo"> 
   <h1><%= data.name %></h1>
+  <!-- <p class="col-xs-4"> <%= data.snippet_text %> </p> -->
   <p><%= data.location.display_address %> <br> </p>
-  <p><%= data.phone %></p>
+  <p><%= data.display_phone %></p>
  	<h4><img src="<%= data.rating_img_url %>"><%= data.rating %> </h4>
   <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
 </div>
