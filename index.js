@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var session = require('express-session');
 var flash = require('connect-flash');
+var async = require('async');
 var yelp = require("yelp").createClient({
   consumer_key: process.env.YELP_CONSUMER_KEY,
   consumer_secret: process.env.YELP_CONSUMER_SECRET,
@@ -123,12 +124,37 @@ app.get('/results', function(req,res){
 
 
 	yelp.search({term: "food", location: req.query.searchTerm}, function(error, data) {
-	  console.log(error);
-	  console.log(data);
+	  // console.log(error);
+	  // res.send(data.businesses);
+	  var results = [];
+	  var commentCalls = data.businesses.map(function(item) {
+	  	return function(callback) {
+	  		results.push(item.id);
+	  		callback();
+	  	}
+	  });
 
-	  // res.send(data)
-	  res.render('main/results', {data: data.businesses});
+	  async.parallel(commentCalls, function() {
+	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
+	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
+	  			res.render('main/results', {results:results});
+	  		});
+	  	});
+	  	
+	  	// res.send(results);
+	  });
 
+// 	  db.comment.findAll({
+// 	  	where:{
+// 	  		yelp_id: data.id,
+// 	  	}
+// 	  }).then(function(comments){
+// 	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
+// 	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
+// 	  res.render('main/results', {data: data.businesses,comments:comments, loveSum:loveSum, hateSum:hateSum});
+// 	  });
+// 	  	});
+// 	  });
 	});
 });
 
@@ -139,9 +165,20 @@ app.get('/resultsName', function(req,res){
 	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
 	  console.log(error);
 	  console.log(data);
+	  db.comment.findAll({
+	  	where:{
+	  		yelp_id: data.id,
+	  	}
+	  }).then(function(comments){
+	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
+	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
+	  			res.render('main/resultsName', {data:data.businesses, comments:comments, loveSum:loveSum, hateSum:hateSum});
+	  		});
+	  	});
+	  });
 
 	  // res.send(data)
-	  res.render('main/resultsName', {data:data.businesses});
+	  
 
 	});
 });
@@ -156,7 +193,6 @@ app.get('/results/:id', function(req,res){
 	  		yelp_id: data.id,
 	  	}
 	  }).then(function(comments){
-	  	var loveSum = 0;
 	  	db.comment.sum('love', {where:{ yelp_id: data.id}}).then(function(loveSum){
 	  		// console.log(sum);
 	  		db.comment.sum('hate', {where:{ yelp_id: data.id}}).then(function(hateSum){

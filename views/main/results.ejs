@@ -1,10 +1,12 @@
 <h1>Results</h1>
 
-<% data.forEach(function(data){ %>
+<% results.forEach(function(data){ %>
 
 <div class="well col-md-4 fun">
 
-<h3><a href="/results/<%= data.id %>"> <b><%= data.name %></b> </a></h3>
-</div>
+<h3><a href="/results/<%= data.id %>"> 
+<b><%= data.name %> </b> </a></h3>
 
-<% }); %>
+
+
+<% }) %>

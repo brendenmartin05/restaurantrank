@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/brendenmartin05/restaurantrank#readme",
   "dependencies": {
+    "async": "^1.4.2",
     "bcrypt": "^0.8.5",
     "body-parser": "^1.13.3",
     "connect-flash": "^0.1.1",
