@@ -1,6 +1,6 @@
 
 <div class="jumbotron" 	>
-<img src="<%= data.image_url %>" class="pull-left logo"> 
+<img src="<%= data.image_url %>" class="pull-left logo">
   <h1><%= data.name %></h1>
   <!-- <p class="col-xs-4"> <%= data.snippet_text %> </p> -->
   <p><%= data.location.display_address %> <br> </p>
@@ -30,9 +30,22 @@
 		<h2>Total Score: <%= loveSum - hateSum %></h2>
 	<%} %>
 	</div>
-	
+
+
+</div><br>
+
+<% comments.forEach(function(posts){ %>
+<div class="well">
+<% if(posts.user){ %>
+Username: <%= posts.user.username%><br>
+<% } else{ %>
+Username: Anonymous<br>
+<% } %>
+Comments: <%= posts.body%><br>
+Likes: <%= posts.love%><br>
+Dislikes: <%= posts.hate %><br>
+<i><%= posts.createdAt%></i>
+
 </div>
-
-
-
+<% });%>
 
