@@ -1,12 +1,17 @@
-
-<div class="col-sm-8">
-	<img src="<%= data.image_url %>"> 
-	<a href="/score/<%= data.id %>" class="btn btn-primary">Rank Me!</a>
-	<h1><%= data.name %></h1>
-	<br>
+<div class="jumbotron" 	>
+<img src="<%= data.image_url %>" class="pull-left logo"> 
+  <h1><%= data.name %></h1>
+  <p><%= data.location.display_address %> <br> </p>
+  <p><%= data.phone %></p>
+ 	<h4><img src="<%= data.rating_img_url %>"><%= data.rating %> </h4>
+  <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
 </div>
 
-<div class="col-sm-4">
-	<h3>Score: 1</h3>
+<div class="score col-xs-4 col-xs-offset-4">
+	<div class="score-border">
+	<h3>Love: 830 <img src="https://cdn3.iconfinder.com/data/icons/medical-icons-4/100/heart-512.png" class="love"></h3>
+	<h3>Hate: 720 <img src="http://www2.psd100.com/ppp/2013/11/0501/button-delete-icon-1105155545.png" class="hate"></h3>
+	
 
+	</div>
 </div>

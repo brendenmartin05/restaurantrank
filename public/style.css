@@ -1,0 +1,47 @@
+
+
+.fun {
+	height: 100px;
+	width: 300px;
+	margin: 30px;
+	
+	text-align: center;
+}
+
+.jumbotron {
+
+}
+
+.logo {
+	height: 200px;
+	width: 200px;
+	border-radius: 150px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+
+}
+
+.score-border {
+	border: 1px solid black;
+	text-align: center;
+	height: 200px;
+}
+
+.hate {
+	height: 50px;
+	width: 50px;
+}
+
+.love {
+	height: 50px;
+	width: 50px;
+}
+
+.rank {
+	position: relative;
+	top: -120px;
+}
+
+
+
+
