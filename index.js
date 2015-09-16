@@ -118,6 +118,7 @@ app.post("/register", function(req,res){
 	}
 })
 
+// Search By City or Zipcode
 app.get('/results', function(req,res){
 
 
@@ -127,6 +128,20 @@ app.get('/results', function(req,res){
 
 	  // res.send(data)
 	  res.render('main/results', {data: data.businesses});
+
+	});
+});
+
+// Search by Business Name
+app.get('/resultsName', function(req,res){
+	console.log(req.query.searchName)
+
+	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
+	  console.log(error);
+	  console.log(data);
+
+	  // res.send(data)
+	  res.render('main/resultsName', {data:data.businesses});
 
 	});
 });
@@ -141,9 +156,16 @@ app.get('/results/:id', function(req,res){
 	  		yelp_id: data.id,
 	  	}
 	  }).then(function(comments){
-	  	res.render('main/restuarant', {data: data, comments:comments});
+	  	var loveSum = 0;
+	  	db.comment.sum('love', {where:{ yelp_id: data.id}}).then(function(loveSum){
+	  		// console.log(sum);
+	  		db.comment.sum('hate', {where:{ yelp_id: data.id}}).then(function(hateSum){
+	  			// console.log(sum);
+	  			res.render('main/restuarant', {data: data, comments:comments, loveSum:loveSum, hateSum:hateSum});
+	  		});
+	  	});
 
-	  })
+	  });
 
 	// res.send("restuarant info works");
 	});

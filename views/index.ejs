@@ -2,8 +2,16 @@
 <h3>Hello, <%= cleanUser.username%>!</h3>
 
 <form class="form" method="get" action="/results">
-<h3>Search by City </h3>
-	<input type="text" class="form-control" placeholder="Enter City" name="searchTerm">
+<h3>Search by City or ZipCode </h3>
+	<input type="text" class="form-control" placeholder="Enter City or ZipCode" name="searchTerm">
+	<br><br>
+	<input type="submit" value="Search" class="btn btn-primary">
+</form>
+
+<form class="form" method="get" action="/resultsName">
+<h3>Search Restaurant Name </h3>
+	<input type="text" class="form-control" placeholder="Enter Restaurant" name="searchName">
+	<input type="text" class="form-control" placeholder="Enter City" name="searchLocation">
 	<br><br>
 	<input type="submit" value="Search" class="btn btn-primary">
 </form>

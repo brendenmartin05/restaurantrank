@@ -9,27 +9,31 @@
   <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
 </div>
 
+
 <div class="score col-xs-4 col-xs-offset-4">
 	<div class="score-border">
-	<h3>Love: 830 <img src="https://cdn3.iconfinder.com/data/icons/medical-icons-4/100/heart-512.png" class="love"></h3>
-	<h3>Hate: 720 <img src="http://www2.psd100.com/ppp/2013/11/0501/button-delete-icon-1105155545.png" class="hate"></h3>
-	
+	<% if(isNaN(loveSum)){ %>
+		<h3>Love: 0</h3>
+	<%} else {%>
+	<h3>Love: <%=loveSum %> </h3>
+	<% } %>
 
+	<% if(isNaN(hateSum)){ %>
+		<h3>Hate: 0</h3>
+	<%} else {%>
+	<h3>Hate: <%=hateSum %> </h3>
+	<% } %>
+
+	<% if (isNaN(loveSum - hateSum)){ %>
+		<h2> Total Score: 0 </h2>
+	<%} else { %>
+		<h2>Total Score: <%= loveSum - hateSum %></h2>
+	<%} %>
 	</div>
+
+	
 </div>
 
 
-<div class="col-sm-8">
-	<img src="<%= data.image_url %>">
-	<a href="/score/<%= data.id %>" class="btn btn-primary">Rank Me!</a>
-	<h1><%= data.name %></h1>
-	<br>
-</div>
 
-<% comments.forEach(function(post){ %>
-<div class="col-sm-4">
-	<h3>Score: <%= post.love - post.hate%></h3>
-
-</div>
-<% }); %>
 
