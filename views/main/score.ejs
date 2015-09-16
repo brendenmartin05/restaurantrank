@@ -1,12 +1,22 @@
 <h1>Score a restuarant here</h1>
 
-<button type="button" class=" btn btn-primary glyphicon glyphicon-arrow-up"></button>
-	<br>
-	<button type="button" class=" btn btn-danger glyphicon glyphicon-arrow-down"></button>
+<%= id%>
 
-	<form> 
+<button type="button" id="love" class=" btn btn-primary glyphicon glyphicon-arrow-up"></button>
+	<br>
+	<button type="button" id="hate" class=" btn btn-danger glyphicon glyphicon-arrow-down"></button>
+  <div id="show_love" name="show_love">
+  </div>
+
+  <div id="show_hate" name="show_hate">
+  </div>
+
+	<form method="post" action="/score/<%= id%>">
+    <input type="hidden" id="hate_score" name="hates" value="0">
+    <input type="hidden" id="love_score" name="loves" value="0">
+    <input type="hidden" id="total_score" name="score" value="0">
 		<label>Add a Comment</label>
 		<br>
-		<textarea type="text"></textarea>
+		<textarea type="text" name="comment"></textarea>
 		<input type="submit" class="btn btn-warning">
 	</form>
