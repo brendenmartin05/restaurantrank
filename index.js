@@ -27,7 +27,7 @@ app.use(flash());
 
 // USERS LOGGING IN
 app.use(function(req,res,next){
-	req.session.user = 3
+	req.session.user = 1
 	if(req.session.user){
 		db.user.findById(req.session.user).then(function(user){
 			req.currentUser = user;
@@ -136,18 +136,35 @@ app.get('/results/:id', function(req,res){
 	  console.log(error);
 	  console.log(data);
 	  // res.send(data)
-	  res.render('main/restuarant', {data: data});
+	  db.comment.findAll({
+	  	where:{
+	  		yelp_id: data.id,
+	  	}
+	  }).then(function(comments){
+	  	res.render('main/restuarant', {data: data, comments:comments});
+
+	  })
 
 	// res.send("restuarant info works");
 	});
 });
 
 app.get('/score/:id', function(req,res){
-	res.render('main/score');
+
+	res.render('main/score', {id: req.params.id});
 });
 
-
-
+app.post('/score/:id', function(req,res){
+	db.comment.create({
+			body: req.body.comment,
+			love: req.body.loves,
+			hate: req.body.hates,
+			yelp_id: req.params.id,
+			user_id: req.session.user
+}).then(function(comment){
+	res.redirect('/results/' + req.params.id)
+});
+});
 
 
 
