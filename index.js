@@ -135,11 +135,15 @@ app.get('/results/:id', function(req,res){
 	yelp.business(req.params.id, function(error, data) {
 	  console.log(error);
 	  console.log(data);
-	  res.send(data)
-	  // res.render('main/restuarant', {data: data});
+	  // res.send(data)
+	  res.render('main/restuarant', {data: data});
 
 	// res.send("restuarant info works");
 	});
+});
+
+app.get('/score/:id', function(req,res){
+	res.render('main/score');
 });
 
 

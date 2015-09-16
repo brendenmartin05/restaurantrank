@@ -20,6 +20,8 @@ var user = sequelize.define('user', {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        models.user.hasMany(models.vote, {foreignKey: "user_id"});
+        models.user.hasMany(models.comment, {foreignKey: "user_id"});
 
       },
       authenticate: function(email,password,callback){
