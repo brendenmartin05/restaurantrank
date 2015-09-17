@@ -46,8 +46,7 @@ Likes: <%= posts.love%><br>
 Dislikes: <%= posts.hate %><br>
 <i><%= posts.createdAt%></i>
 
-	<button class="glyphicon glyphicon-trash btn btn-danger">
-	</button>
+	<a href="/results/<%=posts.yelp_id%>/<%= posts.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right comment-delete"></a>
 	<button class="glyphicon glyphicon-pencil btn btn-warning">
 	</button>
 

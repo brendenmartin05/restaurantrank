@@ -204,6 +204,20 @@ app.get('/results/:id', function(req,res){
 	});
 });
 
+
+app.delete("/results/:yelp_id/:id", function(req, res){
+	db.comment.findById(parseInt(req.params.id)).then(function(comment){
+		comment.destroy().then(function(){
+			res.send({msg:"OK"});
+		}).catch(function(error){
+			res.send({msg:"ERROR"});
+		});
+	}).catch(function(error){
+		res.send({msg: "ERROR"})
+	});
+});
+
+
 app.get('/score/:id', function(req,res){
 
 	res.render('main/score', {id: req.params.id});
