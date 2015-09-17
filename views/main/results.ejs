@@ -4,9 +4,12 @@
 
 <div class="well col-md-4 fun">
 
-<h3><a href="/results/<%= data.id %>"> 
+<h3><a href="/results/<%= data.id %>">
+<% if(isNaN(data.love + data.hate)){ %>
 <b><%= data.name %> </b> </a></h3>
-
-
+<% } else { %>
+<%= data.love + data.hate %> <b><%= data.name %> </b> </a></h3>
+<% } %>
+</div>
 
 <% }) %>

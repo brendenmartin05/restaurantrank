@@ -8,7 +8,7 @@ $(window).load(function(){
 
   $('#hate').click(function(e){
     $('#total_score').val(parseInt($('#total_score').val())-1);
-    $('#hate_score').val(parseInt($('#hate_score').val())+1);
+    $('#hate_score').val(parseInt($('#hate_score').val())-1);
     $('#show_hate').text($('#hate_score').val());
   });
 
