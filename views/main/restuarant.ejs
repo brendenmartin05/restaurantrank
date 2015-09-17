@@ -1,55 +1,120 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Left Sidebar - Landed by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+		<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="/">Rank-a-Restaurant</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="/">Home</a></li>
+							<li><a href="/login">Login</a></li>
+							<li><a href="/logout">Logout</a></li>
+							<li><a href="/register" class="button special">Register</a></li>
+						</ul>
+					</nav>
+				</header>
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2><%= data.name %></h2>
+								<p><%= data.location.display_address %> <br> </p>
+							  	<p><%= data.display_phone %></p>
+							  	<img src="<%= data.rating_img_url %>"><%= data.rating %>  <br>
+						</header>
+						
+							
+							<!-- <img src="<%= data.image_url %>" class="pull-left logo"> -->
+							 
+							  <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
+							
 
-<div class="jumbotron" 	>
-<img src="<%= data.image_url %>" class="pull-left logo">
-  <h1><%= data.name %></h1>
-  <!-- <p class="col-xs-4"> <%= data.snippet_text %> </p> -->
-  <p><%= data.location.display_address %> <br> </p>
-  <p><%= data.display_phone %></p>
- 	<h4><img src="<%= data.rating_img_url %>"><%= data.rating %> </h4>
-  <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
-</div>
+
+							<div class="score col-xs-4 col-xs-offset-4">
+								<div class="score-border">
+								<% if(isNaN(loveSum)){ %>
+									<h3>Love: 0</h3>
+								<%} else {%>
+								<h3>Love: <%=loveSum %> </h3>
+								<% } %>
+
+								<% if(isNaN(hateSum)){ %>
+									<h3>Hate: 0</h3>
+								<%} else {%>
+								<h3>Hate: <%=hateSum %> </h3>
+								<% } %>
+
+								<% if (isNaN(loveSum + hateSum)){ %>
+									<h2> Total Score: 0 </h2>
+								<%} else { %>
+									<h2>Total Score: <%= loveSum + hateSum %></h2>
+								<%} %>
+								</div>
 
 
-<div class="score col-xs-4 col-xs-offset-4">
-	<div class="score-border">
-	<% if(isNaN(loveSum)){ %>
-		<h3>Love: 0</h3>
-	<%} else {%>
-	<h3>Love: <%=loveSum %> </h3>
-	<% } %>
+							</div><br>
 
-	<% if(isNaN(hateSum)){ %>
-		<h3>Hate: 0</h3>
-	<%} else {%>
-	<h3>Hate: <%=hateSum %> </h3>
-	<% } %>
+							<% comments.forEach(function(posts){ %>
+							<div class="well comments">
+							<% if(posts.user){ %>
+							Username: <%= posts.user.username%><br>
+							<% } else{ %>
+							Username: Anonymous<br>
+							<% } %>
+							Comments: <%= posts.body%><br>
+							Likes: <%= posts.love%><br>
+							Dislikes: <%= posts.hate %><br>
+							<i><%= posts.createdAt%></i>
 
-	<% if (isNaN(loveSum + hateSum)){ %>
-		<h2> Total Score: 0 </h2>
-	<%} else { %>
-		<h2>Total Score: <%= loveSum + hateSum %></h2>
-	<%} %>
-	</div>
+								<a href="/results/<%=posts.yelp_id%>/<%= posts.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right comment-delete"></a>
+								<a href="/results/<%=posts.yelp_id%>/edit/<%= posts.id %>" class="btn-sm btn-warning glyphicon glyphicon-pencil pull-right comment-edit"></a>
 
+							</div>
+							<% });%>
+						</div>
+					</div>
+				</div>
 
-</div><br>
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
 
-<% comments.forEach(function(posts){ %>
-<div class="well comments">
-<% if(posts.user){ %>
-Username: <%= posts.user.username%><br>
-<% } else{ %>
-Username: Anonymous<br>
-<% } %>
-Comments: <%= posts.body%><br>
-Likes: <%= posts.love%><br>
-Dislikes: <%= posts.hate %><br>
-<i><%= posts.createdAt%></i>
+		</div>
 
-	<a href="/results/<%=posts.yelp_id%>/<%= posts.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right comment-delete"></a>
-	<button class="glyphicon glyphicon-pencil btn btn-warning">
-	</button>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
 
-</div>
-<% });%>
-
+	</body>
+</html>

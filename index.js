@@ -231,6 +231,24 @@ app.delete("/results/:yelp_id/:id", function(req, res){
 	});
 });
 
+app.get("/results/:yelp_id/edit/:id", function(req,res){
+	db.comment.findById(parseInt(req.params.id)).then(function(comment){
+		res.render('main/scoreedit',{comment:comment})
+	});
+});
+
+app.put("/results/:yelp_id/:id", function(req,res){
+	db.comment.findById(parseInt(req.params.id)).then(function(comment){
+		comment.body = req.body.comment;
+		comment.love = req.body.loves;
+		comment.hate = req.body.hates;
+		comment.save();
+
+		res.send({msg: "OK"});
+	}).catch(function(error){
+		res.send({msg: "Error"});
+	});
+});
 
 app.get('/score/:id', function(req,res){
 
@@ -251,4 +269,4 @@ app.post('/score/:id', function(req,res){
 
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000)

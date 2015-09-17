@@ -1,0 +1,21 @@
+<h1>Score a restuarant here</h1>
+
+
+<button type="button" class=" btn btn-primary glyphicon glyphicon-arrow-up love"></button>
+	<br>
+	<button type="button" class=" btn btn-danger glyphicon glyphicon-arrow-down hate"></button>
+  <div class="show_love" name="show_love">
+  </div>
+
+  <div class="show_hate" name="show_hate">
+  </div>
+
+	<form method="post" action="/score/<%= comment.id%>">
+    <input type="hidden" class="hate_score" name="hates" value="<%=comment.love%>">
+    <input type="hidden" class="love_score" name="loves" value="<%= comment.hate%>">
+    <input type="hidden" class="total_score" name="score" value="0">
+		<label>Edit a Comment</label>
+		<br>
+		<textarea type="text" name="comment"><%=comment.body%></textarea>
+		<input type="submit" class="btn btn-warning">
+	</form>

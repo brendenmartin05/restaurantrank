@@ -25,7 +25,21 @@ $(window).load(function(){
     });
   });
 
+  // $('.comment-edit').submit(function(e){
+  //   e.preventDefault();
+  //   var editForm = $(this);
+  //   var formData= editForm.serialize();
 
+  //   $.ajax({
+  //     url: editForm.attr('action'),
+  //     method: "PUT",
+  //     data: formData
+  //   }).done(function(data){
+  //     console.log('ajax edit working');
+  //     if (data.msg === "OK")
+  //       window.location.href = editForm.attr('action')''
+  //   });
+  // });
 
 
 })
