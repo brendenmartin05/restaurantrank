@@ -12,6 +12,18 @@ $(window).load(function(){
     $('#show_hate').text($('#hate_score').val());
   });
 
+  $('.comment-delete').click(function(e) {
+    e.preventDefault();
+    var button = $(this);
+    console.log(button.attr('href'));
+    $.ajax({
+      url: button.attr("href"),
+      method: "DELETE"
+    }).done(function(data) {
+      if (data.msg === "OK")
+        button.parent().remove();
+    });
+  });
 
 
 
