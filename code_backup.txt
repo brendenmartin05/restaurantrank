@@ -1,0 +1,52 @@
+
+
+
+
+
+///////// FROM /results controller
+    db.comment.findAll({
+      where: {
+        yelp_id: {
+          $in: IDs
+        }
+      },
+      group: ['yelp_id'],
+      attributes: [
+        'yelp_id',
+        [db.sequelize.fn('sum', db.sequelize.col('love')), 'lcount'],
+        [db.sequelize.fn('sum', db.sequelize.col('hate')), 'hcount']
+      ],
+      order:[
+        [db.sequelize.literal('"lcount" - "hcount"'),'ASC']
+      ]
+    }).then(function(comments){
+      res.send({comments:comments,yelpItems:yelpItems})
+    });
+
+    var results = [];
+    console.log(data.businesses);
+    var commentCalls = data.businesses.map(function(item){
+      return function(callback){
+        db.comment.sum('love', {where: {yelp_id: item.id}}).then(function(loves) {
+          db.comment.sum('hate', {where: {yelp_id: item.id}}).then(function(hates) {
+            results.push({
+              id: item.id,
+              name: item.name,
+              love: loves || 0,
+              hate: hates || 0
+            });
+            callback();
+          });
+        });
+      };
+    });
+
+    async.parallel(commentCalls, function(err) {
+      //res.send(results);
+      results = results.sort(function(a,b){
+        var scoreA = a.love - a.hate;
+        var scoreB = b.love - b.hate;
+        return scoreB - scoreA;
+      });
+      res.render('main/results', {results:results})
+    })

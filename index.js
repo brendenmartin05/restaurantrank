@@ -123,30 +123,45 @@ app.post("/register", function(req,res){
 // Search By City or Zipcode
 app.get('/results', function(req,res){
 	yelp.search({term: "food", location: req.query.searchTerm}, function(err, data){
-		var results = [];
-		console.log(data.businesses);
-		var commentCalls = data.businesses.map(function(item){
-			return function(callback){
-				db.comment.sum('love', {where: {yelp_id: item.id}}).then(function(loves) {
-					db.comment.sum('hate', {where: {yelp_id: item.id}}).then(function(hates) {
-						results.push({
-							id: item.id,
-              name: item.name,
-              love: loves,
-              hate: hates
-						});
-						callback();
-					});
-				});
-			};
+
+		var yelpItems = [];
+		var placeHolders = [];
+		var IDs = [];
+		var yelpMap = {};
+
+		data.businesses.forEach(function(item){
+			placeHolders.push('?');
+			IDs.push(item.id);
+			yelpMap[item.id] = yelpItems.length;
+			yelpItems.push({
+				id: item.id,
+        name: item.name,
+        love: 0,
+        hate: 0,
+        score: 0
+			});
 		});
 
-		async.parallel(commentCalls, function(err) {
-			//res.send(results);
-			res.render('main/results', {results:results})
-		})
-	});
+		var inList = placeHolders.join(',')
+		var query = 'SELECT yelp_id, lcount, hcount, lcount+hcount AS "score" from (SELECT "yelp_id", sum("love") AS "lcount", sum("hate") AS "hcount" FROM "comments" AS "comment" WHERE "comment"."yelp_id" IN ('+inList+') GROUP BY "yelp_id") c ORDER BY score DESC;'
 
+		db.sequelize.query(query,
+		  { replacements: IDs, type: sequelize.QueryTypes.SELECT }
+		).then(function(comments) {
+			var results = [];
+			comments.forEach(function(comment){
+				var idx = yelpMap[comment.yelp_id];
+				var result = yelpItems[idx];
+				yelpItems[idx] = false;
+				result.love = parseInt(comment.lcount);
+				result.hate = parseInt(comment.hcount);
+				result.score = parseInt(comment.score);
+				results.push(result);
+			});
+			results = results.concat(yelpItems.filter(function(item){ return !!item; }));
+		  res.render('main/results', {results:results})
+		});
+	});
 });
 
 // Search by Business Name
