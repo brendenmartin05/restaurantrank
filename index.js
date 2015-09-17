@@ -166,7 +166,6 @@ app.get('/results', function(req,res){
 
 // Search by Business Name
 app.get('/resultsName', function(req,res){
-	console.log(req.query.searchName)
 
 	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
 	  console.log(error);
