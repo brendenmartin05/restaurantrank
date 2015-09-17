@@ -24,10 +24,10 @@
 	<h3>Hate: <%=hateSum %> </h3>
 	<% } %>
 
-	<% if (isNaN(loveSum - hateSum)){ %>
+	<% if (isNaN(loveSum + hateSum)){ %>
 		<h2> Total Score: 0 </h2>
 	<%} else { %>
-		<h2>Total Score: <%= loveSum - hateSum %></h2>
+		<h2>Total Score: <%= loveSum + hateSum %></h2>
 	<%} %>
 	</div>
 

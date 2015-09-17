@@ -13,6 +13,7 @@ var yelp = require("yelp").createClient({
 var ejsLayouts = require('express-ejs-layouts');
 var app = express();
 var db = require('./models');
+var sequelize = require('sequelize')
 
 
 app.use(ejsLayouts);
@@ -121,41 +122,31 @@ app.post("/register", function(req,res){
 
 // Search By City or Zipcode
 app.get('/results', function(req,res){
+	yelp.search({term: "food", location: req.query.searchTerm}, function(err, data){
+		var results = [];
+		console.log(data.businesses);
+		var commentCalls = data.businesses.map(function(item){
+			return function(callback){
+				db.comment.sum('love', {where: {yelp_id: item.id}}).then(function(loves) {
+					db.comment.sum('hate', {where: {yelp_id: item.id}}).then(function(hates) {
+						results.push({
+							id: item.id,
+              name: item.name,
+              love: loves,
+              hate: hates
+						});
+						callback();
+					});
+				});
+			};
+		});
 
-
-	yelp.search({term: "food", location: req.query.searchTerm}, function(error, data) {
-	  // console.log(error);
-	  // res.send(data.businesses);
-	  var results = [];
-	  var commentCalls = data.businesses.map(function(item) {
-	  	return function(callback) {
-	  		results.push(item.id);
-	  		callback();
-	  	}
-	  });
-
-	  async.parallel(commentCalls, function() {
-	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
-	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
-	  			res.render('main/results', {results:results});
-	  		});
-	  	});
-	  	
-	  	// res.send(results);
-	  });
-
-// 	  db.comment.findAll({
-// 	  	where:{
-// 	  		yelp_id: data.id,
-// 	  	}
-// 	  }).then(function(comments){
-// 	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
-// 	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
-// 	  res.render('main/results', {data: data.businesses,comments:comments, loveSum:loveSum, hateSum:hateSum});
-// 	  });
-// 	  	});
-// 	  });
+		async.parallel(commentCalls, function(err) {
+			//res.send(results);
+			res.render('main/results', {results:results})
+		})
 	});
+
 });
 
 // Search by Business Name
@@ -178,7 +169,7 @@ app.get('/resultsName', function(req,res){
 	  });
 
 	  // res.send(data)
-	  
+
 
 	});
 });
