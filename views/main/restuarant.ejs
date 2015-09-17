@@ -35,7 +35,7 @@
 </div><br>
 
 <% comments.forEach(function(posts){ %>
-<div class="well">
+<div class="well comments">
 <% if(posts.user){ %>
 Username: <%= posts.user.username%><br>
 <% } else{ %>
@@ -45,6 +45,11 @@ Comments: <%= posts.body%><br>
 Likes: <%= posts.love%><br>
 Dislikes: <%= posts.hate %><br>
 <i><%= posts.createdAt%></i>
+	<button class="glyphicon glyphicon-trash btn btn-danger">
+	</button>
+	<button class="glyphicon glyphicon-pencil btn btn-warning">
+	</button>
+
 
 </div>
 <% });%>
