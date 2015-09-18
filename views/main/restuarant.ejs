@@ -6,11 +6,12 @@
 -->
 <html>
 	<head>
-		<title>Left Sidebar - Landed by HTML5 UP</title>
+		<title>Rank-a-Restaurant</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../style.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
@@ -34,57 +35,57 @@
 							<h2><%= data.name %></h2>
 								<p><%= data.location.display_address %> <br> </p>
 							  	<p><%= data.display_phone %></p>
-							  	<img src="<%= data.rating_img_url %>"><%= data.rating %>  <br>
+							  	 <a class="btn btn-primary btn-lg pull-center" href="/score/<%= data.id %>" role="button">Rank Now!</a><br>
+							  	 
 						</header>
-						
-							
-							<!-- <img src="<%= data.image_url %>" class="pull-left logo"> -->
-							 
-							  <p><a class="btn btn-primary btn-lg pull-right rank" href="/score/<%= data.id %>" role="button">Rank Me!</a></p>
-							
-
-
-							<div class="score col-xs-4 col-xs-offset-4">
+				
+							<div class="col-xs-4 col-xs-offset-4 score">
 								<div class="score-border">
+								<% if (isNaN(loveSum + hateSum)){ %>
+									<h2> Total Score: 0 </h2>
+								<%} else { %>
+									<h2 id="score"> <%= loveSum + hateSum %></h2>
+								<%} %>
+								<div class="col-xs-6">
 								<% if(isNaN(loveSum)){ %>
 									<h3>Love: 0</h3>
 								<%} else {%>
 								<h3>Love: <%=loveSum %> </h3>
 								<% } %>
-
+								</div>
+								<div class="col-xs-6">
 								<% if(isNaN(hateSum)){ %>
 									<h3>Hate: 0</h3>
 								<%} else {%>
 								<h3>Hate: <%=hateSum %> </h3>
 								<% } %>
-
-								<% if (isNaN(loveSum + hateSum)){ %>
-									<h2> Total Score: 0 </h2>
-								<%} else { %>
-									<h2>Total Score: <%= loveSum + hateSum %></h2>
-								<%} %>
+								</div>
+								
 								</div>
 
 
 							</div><br>
+							<div class="container">
+								<div class="row ">
+									<% comments.forEach(function(posts){ %>
+									<div class="col-xs-4 col-xs-offset-4 commentscenter comments">
+									<% if(posts.user){ %>
+									Username: <%= posts.user.username%><br>
+									<% } else{ %>
+									Username: Anonymous<br>
+									<% } %>
+									Comments: <%= posts.body%><br>
+									Likes: <%= posts.love%><br>
+									Dislikes: <%= posts.hate %><br>
+									<i><%= posts.createdAt%></i>
 
-							<% comments.forEach(function(posts){ %>
-							<div class="well comments">
-							<% if(posts.user){ %>
-							Username: <%= posts.user.username%><br>
-							<% } else{ %>
-							Username: Anonymous<br>
-							<% } %>
-							Comments: <%= posts.body%><br>
-							Likes: <%= posts.love%><br>
-							Dislikes: <%= posts.hate %><br>
-							<i><%= posts.createdAt%></i>
+										<a href="/results/<%=posts.yelp_id%>/<%= posts.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right comment-delete"></a>
+										<a href="/results/<%=posts.yelp_id%>/edit/<%= posts.id %>" class=" pull-right btn-sm btn-warning glyphicon glyphicon-pencil pull-right comment-edit"></a>
 
-								<a href="/results/<%=posts.yelp_id%>/<%= posts.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right comment-delete"></a>
-								<a href="/results/<%=posts.yelp_id%>/edit/<%= posts.id %>" class="btn-sm btn-warning glyphicon glyphicon-pencil pull-right comment-edit"></a>
-
+									</div>
+									<% });%>
+								</div>
 							</div>
-							<% });%>
 						</div>
 					</div>
 				</div>
