@@ -33,41 +33,41 @@
 
 						<header class="major">
 							<h2>Rank</h2>
-								
+
 						</header>
 						<div class="row">
-						
+
 							<div class="col-xs-6 col-xs-offset-5">
-						
-								<button type="button" id="love" class=" btn btn-primary fa fa-chevron-up fa-5x"></button>
+
+								<button type="button" class="love btn btn-primary fa fa-chevron-up fa-5x"></button>
 									<br>
-									 <div id="show_love" name="show_love">
+									 <div class="show_love" name="show_love">
 									 </div>
 									 <br>
-								
+
 
 
 								    <br>
-								    <button type="button" id="hate" class="  btn btn-danger fa fa-chevron-down fa-5x"></button>
-								    <div id="show_hate" name="show_hate">
+								    <button type="button" class="hate btn btn-danger fa fa-chevron-down fa-5x"></button>
+								    <div class="show_hate" name="show_hate">
 									 </div>
 							</div>
 
 							 </div>
 							 	<div class="commentscenter col-xs-4 col-xs-offset-4">
-							    <form method="post" action="/score/<%= id%>">
-								   <input type="hidden" id="hate_score" name="hates" value="0">
-								   <input type="hidden" id="love_score" name="loves" value="0">
-								   <input type="hidden" id="total_score" name="score" value="0">
+							    <form action="/results/<%= comment.yelp_id%>">
+								   <input type="hidden" class="hate_score" name="hates" value="<%=comment.hate%>">
+								   <input type="hidden" class="love_score" name="loves" value="<%=comment.love%>">
+								   <input type="hidden" class="total_score" name="score" value="<%= comment.love-comment.hate%>">
 								   <br>
 								        <label>Add a Comment</label>
-								        
-								        <textarea type="text" name="comment"></textarea>
+
+								        <textarea type="text" name="comment"><%=comment.body%></textarea>
 								        <input type="submit" class="btn btn-warning">
 							    </form>
 								</div>
 
-							
+
 						</div>
 					</div>
 				</div>
@@ -101,7 +101,7 @@
 
 	</body>
 </html>
-<!-- 
+<!--
 <button type="button" class=" btn btn-primary glyphicon glyphicon-arrow-up love"></button>
 	<br>
 	<button type="button" class=" btn btn-danger glyphicon glyphicon-arrow-down hate"></button>
@@ -111,12 +111,12 @@
   <div class="show_hate" name="show_hate">
   </div>
 
-	<form method="post" action="/score/<%= comment.id%>">
+	<form method="post" action="/score/<#%= comment.id%>">
     <input type="hidden" class="hate_score" name="hates" value="<%=comment.love%>">
     <input type="hidden" class="love_score" name="loves" value="<%= comment.hate%>">
     <input type="hidden" class="total_score" name="score" value="0">
 		<label>Edit a Comment</label>
 		<br>
-		<textarea type="text" name="comment"><%=comment.body%></textarea>
+		<textarea type="text" name="comment"><#  %=comment.body%></textarea>
 		<input type="submit" class="btn btn-warning">
 	</form> -->
