@@ -36,17 +36,20 @@
 						</header>
 						<div class="row 150%">
 							
-							<% data.forEach(function(data){ %>
+							<% results.forEach(function(data){ %>
 
-							<div class=" col-md-4 fun">
+							<div class=" col-xs-8 col-xs-offset-4 fun">
 
 							<h3><a href="/results/<%= data.id %>"> 
+							
+							<% if(isNaN(data.love + data.hate)){ %>
 							<b><%= data.name %> </b> </a></h3>
-							<h5> <%= loveSum - hateSum %></h5>
+							<% } else { %>
+							<%= data.love + data.hate %> <b><%= data.name %> </b> </a></h3>
+							<% } %>
 							</div>
 
-							<% }); %>
-								
+							<% }) %>
 
 							</div>
 						</div>

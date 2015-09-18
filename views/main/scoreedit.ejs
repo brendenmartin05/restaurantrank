@@ -1,6 +1,107 @@
-<h1>Score a restuarant here</h1>
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Left Sidebar - Landed by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="page-wrapper">
+		<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="/">Rank-a-Restaurant</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="/">Home</a></li>
+							<li><a href="/login">Login</a></li>
+							<li><a href="/logout">Logout</a></li>
+							<li><a href="/register" class="button special">Register</a></li>
+						</ul>
+					</nav>
+				</header>
+				<div id="main" class="wrapper style1">
+					<div class="container">
+
+						<header class="major">
+							<h2>Rank</h2>
+								
+						</header>
+						<div class="row">
+						
+							<div class="col-xs-6 col-xs-offset-5">
+						
+								<button type="button" id="love" class=" btn btn-primary fa fa-chevron-up fa-5x"></button>
+									<br>
+									 <div id="show_love" name="show_love">
+									 </div>
+									 <br>
+								
 
 
+								    <br>
+								    <button type="button" id="hate" class="  btn btn-danger fa fa-chevron-down fa-5x"></button>
+								    <div id="show_hate" name="show_hate">
+									 </div>
+							</div>
+
+							 </div>
+							 	<div class="commentscenter col-xs-4 col-xs-offset-4">
+							    <form method="post" action="/score/<%= id%>">
+								   <input type="hidden" id="hate_score" name="hates" value="0">
+								   <input type="hidden" id="love_score" name="loves" value="0">
+								   <input type="hidden" id="total_score" name="score" value="0">
+								   <br>
+								        <label>Add a Comment</label>
+								        
+								        <textarea type="text" name="comment"></textarea>
+								        <input type="submit" class="btn btn-warning">
+							    </form>
+								</div>
+
+							
+						</div>
+					</div>
+				</div>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+<!-- 
 <button type="button" class=" btn btn-primary glyphicon glyphicon-arrow-up love"></button>
 	<br>
 	<button type="button" class=" btn btn-danger glyphicon glyphicon-arrow-down hate"></button>
@@ -18,4 +119,4 @@
 		<br>
 		<textarea type="text" name="comment"><%=comment.body%></textarea>
 		<input type="submit" class="btn btn-warning">
-	</form>
+	</form> -->
