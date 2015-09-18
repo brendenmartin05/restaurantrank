@@ -166,7 +166,6 @@ app.get('/results', function(req,res){
 
 // Search by Business Name
 app.get('/resultsName', function(req,res){
-	console.log(req.query.searchName)
 
 	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
 	  console.log(error);
@@ -222,11 +221,15 @@ app.get('/results/:id', function(req,res){
 
 app.delete("/results/:yelp_id/:id", function(req, res){
 	db.comment.findById(parseInt(req.params.id)).then(function(comment){
+		if(req.session.user != comment.user_id){
+			res.send('nope')
+		} else {
 		comment.destroy().then(function(){
 			res.send({msg:"OK"});
 		}).catch(function(error){
 			res.send({msg:"ERROR"});
 		});
+	}
 	}).catch(function(error){
 		res.send({msg: "ERROR"})
 	});
