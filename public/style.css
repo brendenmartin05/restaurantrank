@@ -31,17 +31,6 @@
 }
 
 
-
-.hate {
-	height: 50px;
-	width: 50px;
-}
-
-.love {
-	height: 50px;
-	width: 50px;
-}
-
 .rank {
 	position: relative;
 	top: -120px;
@@ -51,11 +40,6 @@
  	margin: 5px;
 
  }
-
-#show_hate  {
-	font-size: 5em;
-}
-
 
  .comments {
  	border: 1px solid white;
