@@ -53,5 +53,10 @@
  	margin-left: 32%;
  }
 
+.scorepagescore {
+	margin-left: 5px;
+}
 
-
+.textareacomment {
+	height: 500px;
+}
