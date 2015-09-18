@@ -167,67 +167,67 @@ app.get('/results', function(req,res){
 // Search by Business Name
 app.get('/resultsName', function(req,res){
 
-yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(err, data){
+// yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(err, data){
 
-		var yelpItems = [];
-		var placeHolders = [];
-		var IDs = [];
-		var yelpMap = {};
+// 		var yelpItems = [];
+// 		var placeHolders = [];
+// 		var IDs = [];
+// 		var yelpMap = {};
 
-		data.businesses.forEach(function(item){
-			placeHolders.push('?');
-			IDs.push(item.id);
-			yelpMap[item.id] = yelpItems.length;
-			yelpItems.push({
-				id: item.id,
-        name: item.name,
-        love: 0,
-        hate: 0,
-        score: 0
-			});
-		});
+// 		data.businesses.forEach(function(item){
+// 			placeHolders.push('?');
+// 			IDs.push(item.id);
+// 			yelpMap[item.id] = yelpItems.length;
+// 			yelpItems.push({
+// 				id: item.id,
+//         name: item.name,
+//         love: 0,
+//         hate: 0,
+//         score: 0
+// 			});
+// 		});
 
-		var inList = placeHolders.join(',')
-		var query = 'SELECT yelp_id, lcount, hcount, lcount+hcount AS "score" from (SELECT "yelp_id", sum("love") AS "lcount", sum("hate") AS "hcount" FROM "comments" AS "comment" WHERE "comment"."yelp_id" IN ('+inList+') GROUP BY "yelp_id") c ORDER BY score DESC;'
+// 		var inList = placeHolders.join(',')
+// 		var query = 'SELECT yelp_id, lcount, hcount, lcount+hcount AS "score" from (SELECT "yelp_id", sum("love") AS "lcount", sum("hate") AS "hcount" FROM "comments" AS "comment" WHERE "comment"."yelp_id" IN ('+inList+') GROUP BY "yelp_id") c ORDER BY score DESC;'
 
-		db.sequelize.query(query,
-		  { replacements: IDs, type: sequelize.QueryTypes.SELECT }
-		).then(function(comments) {
-			var results = [];
-			comments.forEach(function(comment){
-				var idx = yelpMap[comment.yelp_id];
-				var result = yelpItems[idx];
-				yelpItems[idx] = false;
-				result.love = parseInt(comment.lcount);
-				result.hate = parseInt(comment.hcount);
-				result.score = parseInt(comment.score);
-				results.push(result);
-			});
-			results = results.concat(yelpItems.filter(function(item){ return !!item; }));
-		  res.render('main/resultsName', {results:results})
-		});
-	});
-});
-// 	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
-// 	  console.log(error);
-// 	  console.log(data);
-// 	  db.comment.findAll({
-// 	  	where:{
-// 	  		yelp_id: data.id,
-// 	  	}
-// 	  }).then(function(comments){
-// 	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
-// 	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
-// 	  			res.render('main/resultsName', {data:data.businesses, comments:comments, loveSum:loveSum, hateSum:hateSum});
-// 	  		});
-// 	  	});
-// 	  });
-
-// 	  // res.send(data)
-
-
+// 		db.sequelize.query(query,
+// 		  { replacements: IDs, type: sequelize.QueryTypes.SELECT }
+// 		).then(function(comments) {
+// 			var results = [];
+// 			comments.forEach(function(comment){
+// 				var idx = yelpMap[comment.yelp_id];
+// 				var result = yelpItems[idx];
+// 				yelpItems[idx] = false;
+// 				result.love = parseInt(comment.lcount);
+// 				result.hate = parseInt(comment.hcount);
+// 				result.score = parseInt(comment.score);
+// 				results.push(result);
+// 			});
+// 			results = results.concat(yelpItems.filter(function(item){ return !!item; }));
+// 		  res.render('main/resultsName', {results:results})
+// 		});
 // 	});
 // });
+	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
+	  console.log(error);
+	  console.log(data);
+	  db.comment.findAll({
+	  	where:{
+	  		yelp_id: data.id,
+	  	}
+	  }).then(function(comments){
+	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
+	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
+	  			res.render('main/resultsName', {data:data.businesses, comments:comments, loveSum:loveSum, hateSum:hateSum});
+	  		});
+	  	});
+	  });
+
+	  // res.send(data)
+
+
+	});
+});
 
 app.get('/results/:id', function(req,res){
 	yelp.business(req.params.id, function(error, data) {
