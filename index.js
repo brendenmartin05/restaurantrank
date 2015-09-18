@@ -59,6 +59,10 @@ app.get('/', function(req,res){
 	res.render('index');
 });
 
+app.get('/about', function(req, res){
+	res.render('main/about')
+})
+
 app.get('/login', function(req, res){
 	res.render('main/login');
 });
@@ -208,29 +212,13 @@ yelp.search({term:req.query.searchName, location: req.query.searchLocation}, fun
 		});
 	});
 });
-// 	yelp.search({term:req.query.searchName, location: req.query.searchLocation}, function(error, data) {
-// 	  console.log(error);
-// 	  console.log(data);
-// 	  db.comment.findAll({
-// 	  	where:{
-// 	  		yelp_id: data.id,
-// 	  	}
-// 	  }).then(function(comments){
-// 	  	db.comment.sum('love', {where:{yelp_id: data.id}}).then(function(loveSum){
-// 	  		db.comment.sum('hate', {where:{yelp_id: data.id}}).then(function(hateSum){
-// 	  			res.render('main/resultsName', {data:data.businesses, comments:comments, loveSum:loveSum, hateSum:hateSum});
-// 	  		});
-// 	  	});
-// 	  });
 
-// 	  // res.send(data)
-
-
-// 	});
-// });
 
 app.get('/results/:id', function(req,res){
 	yelp.business(req.params.id, function(error, data) {
+		if(error){
+			res.render('error/404')
+		}else{
 	  console.log(error);
 	  console.log(data);
 	  // res.send(data)
@@ -240,8 +228,7 @@ app.get('/results/:id', function(req,res){
 	  	},
 	  	include:[db.user]
 	  }).then(function(comments){
-
-	  	console.log(comments)
+	  	console.log('CONSOLE LOGGING: ' + comments)
 	  	var loveSum = 0;
 
 	  	db.comment.sum('love', {where:{ yelp_id: data.id}}).then(function(loveSum){
@@ -255,7 +242,7 @@ app.get('/results/:id', function(req,res){
 
 	  });
 
-	// res.send("restuarant info works");
+	}// res.send("restuarant info works");
 	});
 });
 

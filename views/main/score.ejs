@@ -34,46 +34,46 @@
 
 						<header class="major">
 							<h2>Rank</h2>
-								
+
 						</header>
 						<div class="row">
-						
+
 							<div class="col-xs-4 col-xs-offset-4">
-						
-								<button type="button" id="love" class=" button fa fa-chevron-up fa-4x"></button>
+
+								<button type="button" class="love button fa fa-chevron-up fa-4x"></button>
 									<br>
-									
+
 									<br>
-										<div id="show_love" class="scorepagescore col-xs-12 button fa fa-1x" name="show_love">
+										<div class="show_love scorepagescore col-xs-12 button fa fa-1x" name="show_love">
 									 	</div>
-									 	<div id="show_hate" class="scorepagescore col-xs-12 button fa fa-1x" name="show_hate">
-									 		
+									 	<div class="show_hate scorepagescore col-xs-12 button fa fa-1x" name="show_hate">
+
 									 	</div>
 									<br>
 									<br>
 									<br>
 									<br>
 								    <br>
-								    <button type="button" id="hate" class="button fa fa-chevron-down fa-4x"></button>
-								    
-									 
+								    <button type="button" class="hate button fa fa-chevron-down fa-4x"></button>
+
+
 							</div>
 
 							 </div>
 							 	<div class="commentscenter col-xs-4 col-xs-offset-4">
 							    <form method="post" action="/score/<%= id%>">
-								   <input type="hidden" id="hate_score" name="hates" value="0">
-								   <input type="hidden" id="love_score" name="loves" value="0">
-								   <input type="hidden" id="total_score" name="score" value="0">
+								   <input type="hidden" class="hate_score" name="hates" value="0">
+								   <input type="hidden" class="love_score" name="loves" value="0">
+								   <input type="hidden" class="total_score" name="score" value="0">
 								   <br>
 								        <label>Tell us about your experience!</label>
-								        
+
 								        <textarea type="text" name="comment"></textarea>
 								        <input type="submit" class="btn btn-warning">
 							    </form>
 								</div>
 
-							
+
 						</div>
 					</div>
 				</div>
